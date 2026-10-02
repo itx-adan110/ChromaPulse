@@ -1,39 +1,19 @@
 {
-  "short_name": "ChromaPulse",
-  "name": "ChromaPulse Neumorphic Color Utility",
-  "icons": [
-    {
-      "src": "[https://via.placeholder.com/192/98C6FB/ffffff?text=CP](https://via.placeholder.com/192/98C6FB/ffffff?text=CP)",
-      "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "[https://via.placeholder.com/512/98C6FB/ffffff?text=ChromaPulse](https://via.placeholder.com/512/98C6FB/ffffff?text=ChromaPulse)",
-      "type": "image/png",
-      "sizes": "512x512"
-    }
-  ],
-  "start_url": "./index.html",
-  "background_color": "#E0E5EC",
-  "theme_color": "#98C6FB",
-  "display": "standalone",
-  "orientation": "portrait"
-}
-
-
-
-
-
-
-
-{
+  "id": "/chromapulse",
   "short_name": "ChromaPulse",
   "name": "ChromaPulse Color Utility",
+  "description": "A professional neumorphic color picker, palette generator, and UI design utility tool.",
   "icons": [
     {
-      "src": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' width='512' height='512'><rect width='512' height='512' rx='120' fill='%23E0E5EC'/><circle cx='256' cy='256' r='160' fill='%2398C6FB'/><text x='50%' y='55%' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='160' font-weight='bold' fill='%23FFFFFF'>CP</text></svg>",
-      "sizes": "192x192 512x512",
-      "type": "image/svg+xml",
+      "src": "https://via.placeholder.com/192/98C6FB/ffffff?text=CP",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://via.placeholder.com/512/98C6FB/ffffff?text=ChromaPulse",
+      "type": "image/png",
+      "sizes": "512x512",
       "purpose": "any maskable"
     }
   ],
@@ -43,5 +23,3 @@
   "display": "standalone",
   "orientation": "portrait"
 }
-
-
