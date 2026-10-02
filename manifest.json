@@ -3,23 +3,23 @@
   "short_name": "ChromaPulse",
   "name": "ChromaPulse Color Utility",
   "description": "A professional neumorphic color picker, palette generator, and UI design utility tool.",
-  "icons": [
-    {
-      "src": "https://via.placeholder.com/192/98C6FB/ffffff?text=CP",
-      "type": "image/png",
-      "sizes": "192x192",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "https://via.placeholder.com/512/98C6FB/ffffff?text=ChromaPulse",
-      "type": "image/png",
-      "sizes": "512x512",
-      "purpose": "any maskable"
-    }
-  ],
   "start_url": "./index.html",
   "background_color": "#E0E5EC",
   "theme_color": "#98C6FB",
   "display": "standalone",
-  "orientation": "portrait"
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
 }
