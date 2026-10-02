@@ -1,0 +1,21 @@
+{
+  "short_name": "ChromaPulse",
+  "name": "ChromaPulse Neumorphic Color Utility",
+  "icons": [
+    {
+      "src": "[https://via.placeholder.com/192/98C6FB/ffffff?text=CP](https://via.placeholder.com/192/98C6FB/ffffff?text=CP)",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "[https://via.placeholder.com/512/98C6FB/ffffff?text=ChromaPulse](https://via.placeholder.com/512/98C6FB/ffffff?text=ChromaPulse)",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "./index.html",
+  "background_color": "#E0E5EC",
+  "theme_color": "#98C6FB",
+  "display": "standalone",
+  "orientation": "portrait"
+}
