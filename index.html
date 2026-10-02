@@ -1,0 +1,297 @@
+const CACHE_NAME = 'chromapulse-v1';
+const ASSETS_TO_CACHE = [
+  './',
+  './index.html',
+  './manifest.json',
+  './sw.js'
+];
+
+// Install Service Worker & Cache Assets
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.addAll(ASSETS_TO_CACHE);
+    })
+  );
+  self.skipWaiting();
+});
+
+// Activate & Clean Old Caches
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    cachesYeh rahe aapki teenon alag alag files ka complete code! AAP inko copy karke exact unhi filenames se apne project folder mein save kar lein:
+
+---
+
+### File 1: `index.html` (Updated with PWA links)
+
+Is main tumhari poori app aur PWA ke required links pehle se add kar diye hain.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChromaPulse - Color Utility App</title>
+  
+  <!-- PWA Manifest & Theme Color -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#98C6FB">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="ChromaPulse">
+
+  <style>
+    :root {
+      --bg-color: #E0E5EC;
+      --text-main: #3D4852;
+      --accent: #98C6FB;
+      --neu-light: #FFFFFF;
+      --neu-dark: #A3B1C6;
+      --neu-flat: #E0E5EC;
+      --shadow-out: 6px 6px 12px var(--neu-dark), -6px -6px 12px var(--neu-light);
+      --shadow-in: inset 4px 4px 8px var(--neu-dark), inset -4px -4px 8px var(--neu-light);
+      --shadow-sm: 3px 3px 6px var(--neu-dark), -3px -3px 6px var(--neu-light);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; -webkit-tap-highlight-color: transparent; }
+    body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding-bottom: 80px; }
+
+    /* Floating Neumorphic Nav Bar */
+    .nav-container { position: fixed; bottom: 20px; z-index: 100; background: var(--bg-color); padding: 8px 16px; border-radius: 40px; box-shadow: var(--shadow-out); display: flex; gap: 12px; align-items: center; }
+    .nav-btn { width: 44px; height: 44px; border-radius: 50%; border: none; background: var(--bg-color); box-shadow: var(--shadow-out); cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text-main); transition: all 0.2s ease; outline: none; }
+    .nav-btn:active, .nav-btn.active { box-shadow: var(--shadow-in); color: #2B6CB0; }
+    .nav-btn svg { width: 20px; height: 20px; fill: currentColor; }
+
+    /* Screen Layouts */
+    .screen { width: 100%; max-width: 480px; padding: 20px; display: none; flex-direction: column; gap: 20px; }
+    .screen.active { display: flex; }
+
+    /* Neumorphic Card Base */
+    .neu-card { background: var(--bg-color); border-radius: 20px; padding: 20px; box-shadow: var(--shadow-out); display: flex; flex-direction: column; gap: 16px; }
+    .neu-btn { border: none; background: var(--bg-color); color: var(--text-main); font-weight: 600; padding: 12px 20px; border-radius: 12px; box-shadow: var(--shadow-out); cursor: pointer; transition: all 0.15s ease; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+    .neu-btn:active { box-shadow: var(--shadow-in); }
+    .neu-input { border: none; background: var(--bg-color); box-shadow: var(--shadow-in); padding: 12px 16px; border-radius: 12px; font-size: 1rem; color: var(--text-main); outline: none; width: 100%; }
+
+    /* Home Preview Box */
+    .color-hero { height: 180px; border-radius: 16px; box-shadow: var(--shadow-in); transition: background-color 0.2s ease; display: flex; align-items: flex-end; padding: 16px; }
+    .color-title { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(4px); padding: 6px 12px; border-radius: 8px; font-weight: 700; font-size: 0.9rem; }
+
+    /* Values Grid */
+    .val-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .val-box { background: var(--bg-color); padding: 10px; border-radius: 10px; box-shadow: var(--shadow-sm); text-align: center; }
+    .val-box span { display: block; font-size: 0.75rem; opacity: 0.7; margin-bottom: 2px; }
+    .val-box strong { font-size: 0.85rem; }
+
+    /* Wheel Canvas */
+    .wheel-container { position: relative; width: 100%; aspect-ratio: 1; max-width: 320px; margin: 0 auto; display: flex; align-items: center; justify-content: center; }
+    canvas { width: 100%; height: 100%; border-radius: 50%; box-shadow: var(--shadow-out); cursor: crosshair; }
+
+    /* Toast */
+    .toast { position: fixed; top: 20px; background: var(--text-main); color: #FFF; padding: 8px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; box-shadow: var(--shadow-out); opacity: 0; transition: opacity 0.3s ease; pointer-events: none; z-index: 200; }
+    .toast.show { opacity: 1; }
+  </style>
+</head>
+<body>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast">Copied to clipboard!</div>
+
+  <!-- 1. HOME SCREEN -->
+  <div id="screen-home" class="screen active">
+    <h2 style="text-align: center;">ChromaPulse</h2>
+    <div id="home-preview" class="color-hero" style="background-color: #98C6FB;">
+      <span id="home-hex" class="color-title">#98C6FB</span>
+    </div>
+    <div class="val-grid">
+      <div class="val-box"><span>HEX</span><strong id="h-hex">#98C6FB</strong></div>
+      <div class="val-box"><span>RGB</span><strong id="h-rgb">152, 198, 251</strong></div>
+      <div class="val-box"><span>HSL</span><strong id="h-hsl">212°, 93%, 79%</strong></div>
+    </div>
+    <button class="neu-btn" onclick="navTo('picker')">Pick Color</button>
+    <button class="neu-btn" onclick="navTo('palette')">Explore Harmony</button>
+  </div>
+
+  <!-- 2. COLOR PICKER SCREEN -->
+  <div id="screen-picker" class="screen">
+    <h3 style="text-align: center;">Color Picker</h3>
+    <div class="wheel-container">
+      <canvas id="colorWheel" width="300" height="300"></canvas>
+    </div>
+    <div class="neu-card">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <div id="picker-swatch" style="width: 44px; height: 44px; border-radius: 50%; box-shadow: var(--shadow-in); background: #98C6FB;"></div>
+        <input type="text" id="hexInput" class="neu-input" value="#98C6FB" placeholder="#HEX">
+      </div>
+      <button class="neu-btn" onclick="copyCurrentHex()">Copy HEX</button>
+      <button class="neu-btn" onclick="saveCurrentColor()">Save Color</button>
+    </div>
+  </div>
+
+  <!-- 3. PALETTE SCREEN -->
+  <div id="screen-palette" class="screen">
+    <h3>Color Harmony</h3>
+    <div class="neu-card">
+      <label for="harmonySelect" style="font-size: 0.85rem; font-weight: 600;">Harmony Mode</label>
+      <select id="harmonySelect" class="neu-input" onchange="renderPalette()">
+        <option value="mono">Monochromatic</option>
+        <option value="analogous">Analogous</option>
+        <option value="complementary" selected>Complementary</option>
+        <option value="triadic">Triadic</option>
+      </select>
+    </div>
+    <div id="paletteBox" style="display: flex; flex-direction: column; gap: 10px;"></div>
+  </div>
+
+  <!-- 4. SAVED SCREEN -->
+  <div id="screen-saved" class="screen">
+    <h3>Saved Colors</h3>
+    <div id="savedList" style="display: flex; flex-direction: column; gap: 10px;"></div>
+  </div>
+
+  <!-- FLOATING NAVIGATION BAR -->
+  <nav class="nav-container">
+    <button class="nav-btn active" onclick="navTo('home', this)">
+      <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+    </button>
+    <button class="nav-btn" onclick="navTo('picker', this)">
+      <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 19.4c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l1.9-1.9C9.22 19.57 10.57 20 12 20c4.97 0 9-4.03 9-9s-4.03-9-9-9zm0 15c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z"/></svg>
+    </button>
+    <button class="nav-btn" onclick="navTo('palette', this)">
+      <svg viewBox="0 0 24 24"><path d="M12 2C6.49 2 2 6.49 2 12s4.49 10 10 10c1.38 0 2.5-1.12 2.5-2.5 0-.61-.23-1.21-.64-1.67-.08-.1-.13-.21-.13-.33 0-.28.22-.5.5-.5H16c3.31 0 6-2.69 6-6 0-4.96-4.49-9-10-9z"/></svg>
+    </button>
+    <button class="nav-btn" onclick="navTo('saved', this)">
+      <svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg>
+    </button>
+  </nav>
+
+  <!-- JAVASCRIPT & SERVICE WORKER REGISTRATION -->
+  <script>
+    let currentColor = '#98C6FB';
+
+    // Navigation Switcher
+    function navTo(screenId, btn) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById('screen-' + screenId).classList.add('active');
+      if(btn) {
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      }
+      if(screenId === 'palette') renderPalette();
+      if(screenId === 'saved') renderSaved();
+    }
+
+    // Toast Functionality
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.innerText = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2000);
+    }
+
+    function copyCurrentHex() {
+      navigator.clipboard.writeText(currentColor);
+      showToast('Copied: ' + currentColor);
+    }
+
+    // Local Storage - Save Colors
+    function saveCurrentColor() {
+      let saved = JSON.parse(localStorage.getItem('chroma_saved') || '[]');
+      if(!saved.includes(currentColor)) {
+        saved.push(currentColor);
+        localStorage.setItem('chroma_saved', JSON.stringify(saved));
+        showToast('Saved to local storage');
+      }
+    }
+
+    function renderSaved() {
+      const container = document.getElementById('savedList');
+      let saved = JSON.parse(localStorage.getItem('chroma_saved') || '[]');
+      if(saved.length === 0) {
+        container.innerHTML = '<p style="text-align:center; opacity:0.6;">No saved colors yet.</p>';
+        return;
+      }
+      container.innerHTML = saved.map(hex => `
+        <div class="neu-card" style="flex-direction:row; align-items:center; justify-content:space-between;">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <div style="width:32px; height:32px; border-radius:50%; background:${hex}; box-shadow:var(--shadow-in);"></div>
+            <strong>${hex}</strong>
+          </div>
+          <button class="neu-btn" style="padding:6px 12px; font-size:0.8rem;" onclick="navigator.clipboard.writeText('${hex}'); showToast('Copied!');">Copy</button>
+        </div>
+      `).join('');
+    }
+
+    // Draw Wheel Canvas
+    const canvas = document.getElementById('colorWheel');
+    const ctx = canvas.getContext('2d');
+    const radius = canvas.width / 2;
+
+    function drawWheel() {
+      for(let angle=0; angle<360; angle++) {
+        let startAngle = (angle - 2) * Math.PI / 180;
+        let endAngle = (angle + 1) * Math.PI / 180;
+        ctx.beginPath();
+        ctx.moveTo(radius, radius);
+        ctx.arc(radius, radius, radius - 10, startAngle, endAngle);
+        ctx.closePath();
+        ctx.fillStyle = `hsl(${angle}, 100%, 70%)`;
+        ctx.fill();
+      }
+    }
+    drawWheel();
+
+    function updateColor(hex) {
+      currentColor = hex;
+      document.getElementById('home-preview').style.backgroundColor = hex;
+      document.getElementById('home-hex').innerText = hex;
+      document.getElementById('h-hex').innerText = hex;
+      document.getElementById('picker-swatch').style.backgroundColor = hex;
+      document.getElementById('hexInput').value = hex;
+    }
+
+    canvas.addEventListener('click', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left - radius;
+      const y = e.clientY - rect.top - radius;
+      let angle = Math.atan2(y, x) * (180 / Math.PI);
+      if (angle < 0) angle += 360;
+      let hex = hslToHex(angle, 90, 75);
+      updateColor(hex);
+    });
+
+    function hslToHex(h, s, l) {
+      l /= 100;
+      const a = s * Math.min(l, 1 - l) / 100;
+      const f = n => {
+        const k = (n + h / 30) % 12;
+        const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+        return Math.round(255 * color).toString(16).padStart(2, '0');
+      };
+      return `#${f(0)}${f(8)}${f(4)}`;
+    }
+
+    function renderPalette() {
+      const type = document.getElementById('harmonySelect').value;
+      const box = document.getElementById('paletteBox');
+      let colors = [currentColor, '#F7FAFC', '#2D3748'];
+      if(type === 'complementary') colors = [currentColor, '#FBN898', '#98FBC6'];
+      box.innerHTML = colors.map(c => `
+        <div class="neu-card" style="background:${c}; height:60px; display:flex; align-items:center; justify-content:space-between;">
+          <span style="background:rgba(255,255,255,0.8); padding:4px 8px; border-radius:6px; font-weight:bold;">${c}</span>
+        </div>
+      `).join('');
+    }
+
+    // Register Service Worker for PWA
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then(reg => console.log('SW Registered!', reg))
+          .catch(err => console.log('SW Registration Failed!', err));
+      });
+    }
+  </script>
+</body>
+  </html>
